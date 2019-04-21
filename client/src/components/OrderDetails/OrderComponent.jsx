@@ -187,14 +187,14 @@ class OrderComponent extends Component {
       }).then(response => response.json())
         .then((result) => {
           let options = {
-            "key": "rzp_test_9F5lBCV4cZB1MH",
+            "key": "********",
             "amount": result.amount, // 2000 paise = INR 20, amount in paisa
             "order_id": result.order_id,
             "name": "Frenzys",
             "description": "Purchase Description",
             "prefill": {
-              "name": "Harshil Mathur",
-              "email": "harshil@razorpay.com"
+              "name": "****",
+              "email": "***@razorpay.com"
             },
             "handler": function(response) {
               if (response.razorpay_payment_id) {
