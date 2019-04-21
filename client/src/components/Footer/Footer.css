@@ -1,0 +1,91 @@
+.footer {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #39968E;
+	color: white;
+	flex-shrink: 0;
+}
+
+.footer_head {
+	font-size: 16px;
+	font-weight: 700;
+	padding-bottom: 20px;
+}
+
+.footer_links{
+	padding-bottom: 20px;
+}
+
+.text_design {
+	text-decoration: none;
+	color: white;
+}
+
+.text_design:hover {
+	text-decoration: none;
+	color: #ffde03;
+}
+
+.social {
+	padding-bottom: 20px;
+}
+
+.social_icons {
+	padding-right: 20px;
+}
+
+.mail {
+	padding-top: 20px;
+}
+
+.mail a{
+	text-decoration: none;
+	color: white;
+}
+
+.mail a:hover{
+	text-decoration: none;
+	color: white;
+}
+
+.playstore {
+	padding-top: 30px;
+	left: 0px;
+}
+.playstore img {
+	width: 180px;
+	height: 70px;
+}
+
+.copyright_div {
+	height: 40px;
+	background-color: #39968E;
+	border-top: 1px solid #AEB2B5;
+	text-align: center;
+	padding-top: 10px;
+	color: white;
+}
+
+@media screen and (max-width:768px) {
+	.footer_cart {
+		position: fixed;
+		display: block;
+		border: none;
+		outline: none;
+		bottom: -1px;
+		z-index: 23;
+		width: 100%;
+		height: 60px;
+		text-align: center;
+	    background-image: linear-gradient(to right, #FACA65, orange);
+	}
+
+	.footer_cart span {
+		position: relative;
+		display: block;
+		margin-top: 0px;
+		font-size: 16px;
+		color: white;
+		font-weight: 700;
+	}
+}

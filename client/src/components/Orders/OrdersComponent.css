@@ -1,0 +1,71 @@
+.orderHeader {
+  text-transform: capitalize;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #282c3f;
+  margin-bottom: 20px;
+}
+
+.orderItems {
+  position: relative;
+  padding: 20px;
+  width: 100%;
+  border: 1px solid #d4d5d9;
+  text-transform: capitalize;
+  margin-bottom: 20px;
+}
+
+.orderItemDiv {
+  display: flex;
+}
+
+.orderDetail {
+  list-style-type: none;
+  text-decoration: none;
+  padding: 0;
+}
+
+.orderDetail img {
+  width: 160px;
+  height: 100px;
+}
+
+.orderNoDetails {
+  margin-left: 20px;
+  color: dimgray;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 80%;
+}
+
+.orderDeliver {
+  padding-top: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #282c3f;
+}
+
+.addressName {
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.6px;
+  padding-top: 5px;
+}
+
+.itemDetails {
+  display: flex;
+  color: #282c3f;
+}
+
+.itemName {
+  width: 70%;
+}
+
+.paid {
+  position: absolute;
+  right: 20px;
+}
+
+.btn {
+  background-color: blue;
+}

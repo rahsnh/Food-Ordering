@@ -1,0 +1,129 @@
+.modal_container {
+	padding: 30px;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 20;/* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+		background-color: rgba(0,0,0,0.9);
+    padding-top: 50px;
+}
+
+.modal_content {
+    background-color: #fefefe;
+    margin: 5% auto; /* 5% from the top, 15% from the bottom and centered */
+    width: 320px; /* Could be more or less, depending on screen size */
+		height: 480px;
+		display: none;
+}
+
+.close {
+    position: absolute;
+    right: 35px;
+    top: 15px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #f44336;
+	background-color: white;
+}
+
+.close:hover,
+.close:focus {
+    color: #f44336;
+    cursor: pointer;
+}
+
+.modal_header {
+	padding-top: 10px;
+	margin-bottom: 24px;
+	color: #333;
+	font-size: 26px;
+}
+
+.move-enter {
+	opacity: 0;
+	transform: scale(0.97) translateY(5px);
+}
+
+.move-enter-active {
+	opacity: 1;
+	transform: scale(1) translateY(0);
+	transition: all 300ms linear;
+}
+
+.move-exit{
+  opacity: 1;
+	transform: scale(1) translateY(0);
+}
+.move-exit-active{
+  opacity: 0;
+	transform: scale(0.97) translateY(5px);
+  transition: all 300ms linear ;
+}
+
+#forgot-psw {
+	margin-top: 10px;
+	font-weight: 700;
+	color: #39968E;
+	padding-left: 5px;
+}
+
+.group {
+	margin-top: 10px;
+}
+
+.form-input{
+	font-size: 14px;
+	padding: 10px 10px 10px 5px;
+	-webkit-appearance: none;
+	display: block;
+	background: none;
+	color: #636363;
+	width: 100%;
+	border: none;
+	border-radius: 0;
+	border-bottom: 1px solid #757575;
+	margin-top: 10px;
+}
+
+.form-input:focus { outline: none; border-bottom: 2px solid #39968E;}
+
+.btn-design {
+	margin-top: 10px;
+	width: 100%;
+	height: 40px;
+	background-image: linear-gradient(to right, #FACA65, orange);
+	border: none;
+	outline: none;
+	color: white;
+	font-weight: 700;
+}
+
+#toggle-btn {
+	color: #39968E;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+#toggle-btn:hover {
+	text-decoration: none;
+	color: #39968E;
+}
+
+#resend-btn {
+	color: #39968E;
+	padding-left: 5px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+#resend-btn:hover {
+	text-decoration: none;
+	color: #39968E;
+}

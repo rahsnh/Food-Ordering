@@ -1,0 +1,15 @@
+.orderDetails {
+  margin-top: 30px;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  padding: 20px;
+  
+  position: relative;
+  background-color: #39968E;
+}
+
+@media screen and (max-width: 768px) {
+  .orderDetails {
+    margin-left: 0px;
+  }
+}

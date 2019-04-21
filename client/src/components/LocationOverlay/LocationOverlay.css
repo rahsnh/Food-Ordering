@@ -1,0 +1,112 @@
+.location_overlay {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 35;/* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+	background-color: rgba(0,0,0,0.9);
+	padding-top: 66px;
+}
+
+#geo_loc {
+	max-width: 1248px;
+	min-width: 978px;
+	margin: 5px auto;
+	display: none;
+}
+
+#geo_loc_inner {
+	width: 315px;
+	margin-left: 75px;
+	height: 400px;
+	background-color: #F9F9F9;
+	display: inline-block;
+	border-radius: 8px;
+	box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.4);
+}
+
+#geo_bar {
+	width: 95%;
+	display: block;
+	margin: 10px auto;
+	height: 40px;
+	padding-left: 20px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	outline: none;
+}
+
+#curr_loc {
+	width: 95%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 10px auto;
+	height: 40px;
+	border: 1px solid #39968E;
+	border-radius: 8px;
+	outline: none;
+	background-color: white;
+	color: #39968E;
+	font-size: 14px;
+	letter-spacing: 0.1px;
+	font-weight: 500;
+}
+
+.material-icons.curr_icon {
+	font-size: 14px;
+	padding-right: 5px;
+}
+
+#saved_add {
+	height: 250px;
+	overflow-y: auto;
+}
+
+#saved_loc_header {
+	height: 30px;
+	background-color: #ccc;
+	display: flex;
+	align-items: center;
+	color: grey;
+	padding-left: 15px;
+}
+
+.address_div {
+	padding: 5px 15px;
+	border-bottom: 1px solid #ccc;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+@media screen
+	and (max-width: 990px) {
+    #geo_loc {
+			min-width: 0;
+			max-width: 100%;
+			height: 100%;
+			margin: 0;
+		}
+  }
+
+@media screen and (max-width: 768px) {
+  #geo_loc {
+		min-width: 0;
+		max-width: 100%;
+		height: 100%;
+		margin: 0;
+	}
+
+	#geo_loc_inner {
+		width: 100%;
+		height: 100%;
+		margin-left: 0;
+	}
+
+	#saved_add {
+		height: 350px;
+	}
+}

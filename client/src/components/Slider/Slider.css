@@ -1,0 +1,108 @@
+.slider-container {
+	width: 100%;
+	height: 350px;
+	display: block;
+	position: relative;
+	overflow: hidden;
+	margin: 0;
+	z-index: 5;
+}
+
+.slider-slide-container {
+  	width: 400%;
+  	height: 100%;
+  	margin-left: -100%;
+}
+
+.slider-slide {
+  	width: calc(100% / 4); /* number of slides */
+  	height: 100%;
+  	float: left;
+  	box-sizing: border-box;
+	  background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.slider-slide1 {
+  	background-image: url('https://res.cloudinary.com/frenzys/image/upload/v1551213659/assets/slide1.jpg');
+}
+.slider-slide2 {
+  	background-image: url('https://res.cloudinary.com/frenzys/image/upload/v1551213659/assets/slide2.jpg');
+}
+.slider-slide3 {
+  	background-image: url('https://res.cloudinary.com/frenzys/image/upload/v1551213659/assets/slide3.jpg');
+}
+.slider-slide4 {
+  	background-image: url('https://res.cloudinary.com/frenzys/image/upload/v1551213659/assets/slide4.jpg');
+}
+
+.slider-arrow {
+	position: absolute;
+	top: 40%;
+}
+
+.slider-arrow-left {
+	left: 0;
+}
+
+.slider-arrow-right {
+	right: 0;
+}
+
+.slider-arrow > span {
+  	cursor: pointer;
+	-webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	height: 80px;
+	width: 40px;
+	background-color: rgba(255, 255, 255, 0.6);
+	display: flex;
+	align-items: center;
+	text-align: center;
+	box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.3);
+}
+
+.slider-arrow-left > span {
+	border-top-right-radius: 40px;
+	border-bottom-right-radius: 40px;
+}
+
+.slider-arrow-left > span:hover {
+	box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.6);
+	background-color: rgba(255, 255, 255, 0.9);
+}
+
+.slider-arrow-right > span {
+	border-top-left-radius: 40px;
+	border-bottom-left-radius: 40px;
+}
+
+.slider-arrow-right > span:hover {
+	box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.6);
+	background-color: rgba(255, 255, 255, 0.9);
+}
+
+.slider-arrow > span > i{
+	font-size: 48px;
+}
+
+.slider-arrow-left > span > i{
+	margin-left: -8px;
+}
+
+.slider-arrow-right > span > i{
+	margin-left: 0px;
+}
+
+@media screen and (max-width: 768px) {
+	.slider-container {
+		height: 250px;
+	}
+
+	.slider-arrow {
+		display: none;
+	}
+}

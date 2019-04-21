@@ -1,0 +1,97 @@
+.menu_wrapper {
+	position: sticky;
+	height: 50px;
+	width: 100%;
+	top: 55px;
+	padding: 0;
+	margin: 0;
+	margin-top: 40px;
+	background-color: white;
+	box-shadow: 0px 8px 6px -6px rgba(0, 0, 0, 0.3);
+	z-index: 15;
+}
+
+.option_menu {
+	margin-left: -15px;
+	top: 10px;
+}
+
+.drop_down_design {
+	width: 180px;
+	height: 30px;
+	border-width: medium;
+	border-color: #39968E;
+	background-color: floralwhite;
+	border-radius: 5px;
+	outline: none;
+	color: #3A126C;
+	font-size: 1em;
+	text-transform: capitalize;
+}
+
+.filter_icon{
+	position: absolute;
+	right: -10px;
+	top: 10px;
+	background-color: white;
+	outline: none;
+	border: none;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+	.menu_wrapper {
+		margin-top: 0;
+	}
+
+	.active_menu {
+		position: sticky;
+		height: 50px;
+		width: 100%;
+		top: 95px;
+		padding: 0;
+		margin: 0;
+		margin-top: 40px;
+		background-color: white;
+		box-shadow: 0px 8px 6px -6px rgba(0, 0, 0, 0.3);
+		z-index: 15;
+	}
+
+	.option_menu {
+		height: 50px;
+		padding: 0;
+		margin: 0;
+	}
+
+	.drop_down_design {
+		position: absolute;
+		width: 100%;
+		height: 50px;
+		top: -10px;
+		left: 0px;
+		border: none;
+		background-color: white;
+		outline: none;
+		color: #3A126C;
+		font-size: 1em;
+	}
+
+	.filter_icon_div{
+		border-left: 1px solid #AEB2B5;
+		height: 50px;
+		margin: 0;
+		padding: 0;
+	}
+
+	.filter_icon {
+		position: absolute;
+		right: 0;
+		top: 8px;
+		width: 100%;
+		text-align: center;
+	}
+
+	.filter_icon:hover {
+		text-decoration: none;
+	}
+}
