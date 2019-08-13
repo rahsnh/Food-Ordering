@@ -5,8 +5,10 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const jwt = require("jsonwebtoken");
 const category = require('./models/categorySchema.js');
 const menuItems = require('./models/menuItemSchema.js');
+var token;
 
 const app = express();
 
@@ -23,10 +25,27 @@ app.use(session({secret: "secret key", saveUninitialized: true, resave: false}))
 
 mongoose.connect(db_url, function(err, db) {
   if (err) {
-    console.log('Uable to connect to the mongoDB server');
+    console.log(err+'Unable to connect to the mongoDB server');
   } else {
     console.log('Connection established');
   }
+});
+
+app.use(function(req, res, next) {
+  token = req.headers['authorization'];
+  if (!token) return next();
+
+  jwt.verify(token, 'secret123', function(err, user) {
+    if (err) {
+      return res.status(401).json({
+        success: false,
+        message: 'Please register Log in using a valid email to submit posts'
+      });
+    } else {
+      req.user = user.id; //set the user to req so other routes can use it
+      next();
+    }
+  })
 });
 
 //fetch orders
