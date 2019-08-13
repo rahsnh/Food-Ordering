@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(session({secret: "secret key", saveUninitialized: true, resave: false}));
 
-app.use(express.static(path.join(__dirname, "client", "public")))
+app.use(express.static(path.join(__dirname, "client", "build")))
 
 mongoose.connect(db_url, function(err, db) {
   if (err) {
@@ -85,7 +85,7 @@ const userAccountroute = require('./routes/userAccountRoute');
 app.use('/api/account', userAccountroute);
 
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "public", "index.html"));
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 app.listen(process.env.PORT);
