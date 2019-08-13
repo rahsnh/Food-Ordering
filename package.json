@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"nodemon server.js\" \"cd client && npm start\""
+    "start": "node server.js",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "author": "",
   "license": "ISC",
@@ -24,5 +25,8 @@
     "npm": "^6.5.0",
     "razorpay": "^2.0.3",
     "sendotp": "^1.2.9"
+  },
+  "engines": {
+     "node": "8.11.3"
   }
 }
