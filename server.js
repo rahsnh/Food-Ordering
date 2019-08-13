@@ -23,6 +23,8 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(session({secret: "secret key", saveUninitialized: true, resave: false}));
 
+app.use(express.static(path.join(__dirname, "client", "public")))
+
 mongoose.connect(db_url, function(err, db) {
   if (err) {
     console.log(err+'Unable to connect to the mongoDB server');
@@ -81,6 +83,10 @@ app.use('/api/payments', paymentRoute);
 // login and signup fetching
 const userAccountroute = require('./routes/userAccountRoute');
 app.use('/api/account', userAccountroute);
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "public", "index.html"));
+});
 
 app.listen(process.env.PORT);
 console.log('started application');
