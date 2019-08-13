@@ -7,7 +7,7 @@ import './OrderComponent.css';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
-import { clearCart } from '../actions/cartActions';
+import { clearCart } from '../actions/allActions';
 import { Redirect } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
@@ -187,14 +187,14 @@ class OrderComponent extends Component {
       }).then(response => response.json())
         .then((result) => {
           let options = {
-            "key": "********",
+            "key": "rzp_test_9F5lBCV4cZB1MH",
             "amount": result.amount, // 2000 paise = INR 20, amount in paisa
             "order_id": result.order_id,
             "name": "Frenzys",
             "description": "Purchase Description",
             "prefill": {
-              "name": "****",
-              "email": "***@razorpay.com"
+              "name": "Harshil Mathur",
+              "email": "harshil@razorpay.com"
             },
             "handler": function(response) {
               if (response.razorpay_payment_id) {
@@ -336,7 +336,7 @@ OrderComponent.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  return { addedItems: state.addedItems, cartTotal: state.cartTotal }
+  return { addedItems: state.cart.addedItems, cartTotal: state.cart.cartTotal }
 }
 
 const mapDispatchToProps = (dispatch)=>{

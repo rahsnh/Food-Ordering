@@ -99,6 +99,7 @@ $(document).ready(function() {
 	});
 
 	$('.cart_div').click(function() {
+		$('#right_account_hover').hide();
 		$('.cart_content_div').toggle();
 	});
 
@@ -106,12 +107,9 @@ $(document).ready(function() {
 		$('#cart_overlay').fadeOut();
 	});
 
-	$('.logged_in').mouseenter(function() {
-		$('#right_account_hover').show();
-	});
-
-	$('#right_account_hover').mouseleave(function() {
-		$(this).hide();
+	$('.logged_in').click(function() {
+		$('.cart_content_div').hide();
+		$('#right_account_hover').toggle();
 	});
 });
 

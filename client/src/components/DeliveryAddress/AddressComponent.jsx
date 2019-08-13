@@ -17,6 +17,7 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import green from '@material-ui/core/colors/green';
 import ErrorIcon from '@material-ui/icons/Error';
+import axios from "axios";
 
 const styles = theme => ({
   addressCard: {
@@ -204,16 +205,11 @@ class AddressComponent extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/address/fetchaddress', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
+    axios.post('/api/address/fetchaddress')
       .then(json => {
-        if (json.success) {
+        if (json.data.success) {
           this.setState({
-            savedAddress: json.address
+            savedAddress: json.data.address
           });
         }
       });
@@ -277,30 +273,20 @@ class AddressComponent extends Component {
 
     this.setState({loading: true, open: false});
 
-    fetch('/api/address/newaddress', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        deliveryarea: deliveryArea,
-        address: address,
-        nickname: nickName
-      })
-    }).then(res => res.json())
+    axios.post('/api/address/newaddress', {deliveryarea: deliveryArea, address: address, nickname: nickName})
       .then(json => {
-        if (json.success) {
+        if (json.data.success) {
           this.setState({
-            Error: json.message,
+            Error: json.data.message,
             open: true,
             loading: false,
             status: 'success',
-            savedAddress: [json.addedAddress, ...this.state.savedAddress],
+            savedAddress: [json.data.addedAddress, ...this.state.savedAddress],
             expanded: false
           })
         } else {
           this.setState({
-            Error: json.message,
+            Error: json.data.message,
             open: true,
             loading: false,
             status: 'error'
@@ -312,7 +298,7 @@ class AddressComponent extends Component {
   getLocation() {
     const mapArea = document.getElementById('map');
     const deliveryArea = document.getElementById('deliveryArea');
-    const __KEY = 'AIzaSyBGCql0HlN4C_D7B2BcIIhtuFvjrdfvoew';
+    const __KEY = '';
 
     const google = window.google;
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { createCart } from '../actions/cartActions';
+import { createCart } from '../actions/allActions';
 import './CartOverlay.css';
 
 class CartOverlay extends Component {
@@ -55,11 +55,11 @@ class CartOverlay extends Component {
     const isMobile = width <= 768;
 
     if (isMobile) {
-      if (this.props.addedItems.length) {
+      if (this.props.cart.addedItems.length) {
         if (this.state.show) {
           return (
             <button className="footer_cart" onClick={this.checkoutClick}>
-              <span>{this.props.addedItems.length} item in Cart</span>
+              <span>{this.props.cart.addedItems.length} item in Cart</span>
               <span id="right_arrow"><i className="material-icons">arrow_forward</i></span>
               <span id="checkout_txt" style={{textTransform: 'uppercase'}}>proceed to checkout</span>
             </button>
@@ -72,7 +72,7 @@ class CartOverlay extends Component {
       			<div className="cart_content_div">
       				<div id="close_cart_btn" onClick={this.checkoutClick}><i className="material-icons">close</i></div>
       				<ul>
-                {(this.props.addedItems.map(item => {
+                {(this.props.cart.addedItems.map(item => {
                   return (<li key={item.item_id}>
                     <img src={"assets/" +item.itemType+ "_symbol.png"} /><div className="cart_item_div"><span>{item.itemName}</span><div className="item_price_div">{item.total}</div></div>
                     <div className="add_minus_div">
@@ -95,12 +95,12 @@ class CartOverlay extends Component {
         return (null);
       }
     } else {
-      if (this.props.addedItems.length) {
+      if (this.props.cart.addedItems.length) {
         return (
         <div className="cart_div_inner">
           <div className="cart_content_div">
             <ul>
-              {(this.props.addedItems.map(item => {
+              {(this.props.cart.addedItems.map(item => {
                 return (<li key={item.item_id}>
                   <img src={"assets/" +item.itemType+ "_symbol.png"} /><div className="cart_item_div"><span>{item.itemName}</span><div className="item_price_div">{item.total}</div></div>
                   <div className="add_minus_div">
@@ -131,7 +131,7 @@ class CartOverlay extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { addedItems: state.addedItems }
+  return { cart: state.cart }
 }
 
 const mapDispatchToProps = (dispatch) => {

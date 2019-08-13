@@ -5,10 +5,10 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import './LoginComponent.css';
 import { withStyles } from '@material-ui/core/styles';
-import {
-  getFromStorage,
-  setInStorage,
-} from '../../utils/storage';
+import Grid from '@material-ui/core/Grid';
+import { connect } from "react-redux";
+import { loginUser } from "../actions/allActions";
+import { Redirect } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
 
@@ -124,18 +124,18 @@ class LoginComponent extends Component {
       email: '',
       firstname: '',
       lastname: '',
-      token: '',
       Error: '',
-      toggleLogin: true
+      toggleLogin: true,
+      redirectTo: false
     }
     this.changeHandler = this.changeHandler.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
   }
 
   componentDidMount() {
-    const obj = getFromStorage('the_main_app');
-    if (obj && obj.token) {
-      this.setState({token: obj.token});
+    // If logged in and user navigates to Login page, should redirect them to dashboard
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/");
     }
   }
 
@@ -169,20 +169,20 @@ class LoginComponent extends Component {
       },
       body: JSON.stringify({
         phno: signInNumber,
-        password: signInPass,
-        token_id: this.state.token
+        password: signInPass
       }),
     }).then(res => res.json())
       .then(json => {
         if (json.success) {
-          setInStorage('the_main_app', { token: json.token });
+          this.props.loginUser(json.token);
           this.setState({
             Error: '',
             isLoading: false,
             signInPass: '',
             signInNumber: '',
+            redirectTo: true
           });
-        window.location.href = '/checkout';
+        //window.location.href = '/';
         } else {
           this.setState({
             Error: json.message,
@@ -195,196 +195,206 @@ class LoginComponent extends Component {
   render() {
     const { classes } = this.props;
     const { signInNumber, signInPass, signUpNumber, signUpPass, email, firstname, lastname } = this.state;
+    const { from } = this.props.location.state || { from: { pathname: '/' } }
+    const { redirectTo } = this.state
+
+    if (redirectTo === true) {
+      return <Redirect to={from} />
+    }
 
     return (
-      <Card className = "login-card">
-        <div className={classes.header}>
-          <div className={classes.subHeader}><button className={classes.buttonHeader} onClick={() => {this.setState({toggleLogin: true});}} style={this.state.toggleLogin ? {borderBottom: '1.5px solid #39968E'}:(null)}>login</button></div>
-          <div className={classes.subHeader}><button className={classes.buttonHeader} onClick={() => {this.setState({toggleLogin: false});}} style={!this.state.toggleLogin ? {borderBottom: '1.5px solid #39968E'}:(null)}>register</button></div>
-        </div>
-        <div className={classes.titleHeader}>Login with your email</div>
-        <div>
-          {this.state.Error ? <div className={classes.error}><p style={{color: 'red'}}>{this.state.Error}</p></div> : null}
-          {this.state.toggleLogin ? 
-            <form noValidate autoComplete="off" onSubmit={this.handleLogin}>
-            <TextField
-              id="numField"
-              InputLabelProps={{
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused,
-                },
-              }}
-              InputProps={{
-                classes: {
-                  root: classes.cssOutlinedInput,
-                  focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-              label="Enter Mobile number"
-              type="text"
-              name="signInNumber"
-              value={signInNumber}
-              onChange={this.changeHandler}
-              className={classes.textField}
-              margin="normal"
-              variant="outlined" />
-              <div>
-              <TextField
-              id="passField"
-              InputLabelProps={{
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused,
-                },
-              }}
-              InputProps={{
-                classes: {
-                  root: classes.cssOutlinedInput,
-                  focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-              label="Enter Password"
-              type="password"
-              name="signInPass"
-              value={signInPass}
-              onChange={this.changeHandler}
-              className={classes.textField}
-              margin="normal"
-              variant="outlined" />
+      <Grid container justify="center" alignItems="center" direction="column" spacing={12}>
+        <Grid item lg={6} xs={12}>
+          <Card className = "login-card">
+            <div className={classes.header}>
+              <div className={classes.subHeader}><button className={classes.buttonHeader} onClick={() => {this.setState({toggleLogin: true});}} style={this.state.toggleLogin ? {borderBottom: '1.5px solid #39968E'}:(null)}>login</button></div>
+              <div className={classes.subHeader}><button className={classes.buttonHeader} onClick={() => {this.setState({toggleLogin: false});}} style={!this.state.toggleLogin ? {borderBottom: '1.5px solid #39968E'}:(null)}>register</button></div>
+            </div>
+            <div className={classes.titleHeader}>Login with your email</div>
+            <div>
+              {this.state.Error ? <div className={classes.error}><p style={{color: 'red'}}>{this.state.Error}</p></div> : null}
+              {this.state.toggleLogin ? 
+                <form noValidate autoComplete="off" onSubmit={this.handleLogin}>
+                <TextField
+                  id="numField"
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.cssLabel,
+                      focused: classes.cssFocused,
+                    },
+                  }}
+                  InputProps={{
+                    classes: {
+                      root: classes.cssOutlinedInput,
+                      focused: classes.cssFocused,
+                      notchedOutline: classes.notchedOutline,
+                    },
+                  }}
+                  label="Enter Mobile number"
+                  type="text"
+                  name="signInNumber"
+                  value={signInNumber}
+                  onChange={this.changeHandler}
+                  className={classes.textField}
+                  margin="normal"
+                  variant="outlined" />
+                  <div>
+                  <TextField
+                  id="passField"
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.cssLabel,
+                      focused: classes.cssFocused,
+                    },
+                  }}
+                  InputProps={{
+                    classes: {
+                      root: classes.cssOutlinedInput,
+                      focused: classes.cssFocused,
+                      notchedOutline: classes.notchedOutline,
+                    },
+                  }}
+                  label="Enter Password"
+                  type="password"
+                  name="signInPass"
+                  value={signInPass}
+                  onChange={this.changeHandler}
+                  className={classes.textField}
+                  margin="normal"
+                  variant="outlined" />
+                  </div>
+                  <Button type="submit" className={classes.cssRoot} onClick={this.handleLogin}>{!this.state.isLoading ? <span>login</span> : <div><CircularProgress className={classes.progress} size={26} /></div>}</Button>
+              </form> : 
+                <form noValidate autoComplete="off" onSubmit={this.handleRegister}>
+                <TextField
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.cssLabel,
+                      focused: classes.cssFocused,
+                    },
+                  }}
+                  InputProps={{
+                    classes: {
+                      root: classes.cssOutlinedInput,
+                      focused: classes.cssFocused,
+                      notchedOutline: classes.notchedOutline,
+                    },
+                  }}
+                  label="Enter Mobile number"
+                  type="text"
+                  name="signUpNumber"
+                  value={signUpNumber}
+                  onChange={this.changeHandler}
+                  className={classes.textField}
+                  margin="normal"
+                  variant="outlined" />
+                  <div>
+                  <TextField
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.cssLabel,
+                      focused: classes.cssFocused,
+                    },
+                  }}
+                  InputProps={{
+                    classes: {
+                      root: classes.cssOutlinedInput,
+                      focused: classes.cssFocused,
+                      notchedOutline: classes.notchedOutline,
+                    },
+                  }}
+                  label="Enter Password"
+                  type="password"
+                  name="signUpPass"
+                  value={signUpPass}
+                  onChange={this.changeHandler}
+                  className={classes.textField}
+                  margin="normal"
+                  variant="outlined" />
+                  </div>
+                  <div>
+                  <TextField
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.cssLabel,
+                      focused: classes.cssFocused,
+                    },
+                  }}
+                  InputProps={{
+                    classes: {
+                      root: classes.cssOutlinedInput,
+                      focused: classes.cssFocused,
+                      notchedOutline: classes.notchedOutline,
+                    },
+                  }}
+                  label="Enter Email"
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={this.changeHandler}
+                  className={classes.textField}
+                  margin="normal"
+                  variant="outlined" />
+                  </div>
+                  <div>
+                  <TextField
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.cssLabel,
+                      focused: classes.cssFocused,
+                    },
+                  }}
+                  InputProps={{
+                    classes: {
+                      root: classes.cssOutlinedInput,
+                      focused: classes.cssFocused,
+                      notchedOutline: classes.notchedOutline,
+                    },
+                  }}
+                  label="Firstname"
+                  type="text"
+                  name="firstname"
+                  value={firstname}
+                  onChange={this.changeHandler}
+                  className={classes.nameField}
+                  margin="normal"
+                  variant="outlined" />
+                  <TextField
+                  style={{float: 'right'}}
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.cssLabel,
+                      focused: classes.cssFocused,
+                    },
+                  }}
+                  InputProps={{
+                    classes: {
+                      root: classes.cssOutlinedInput,
+                      focused: classes.cssFocused,
+                      notchedOutline: classes.notchedOutline,
+                    },
+                  }}
+                  label="Lastname"
+                  type="text"
+                  name="lastname"
+                  value={lastname}
+                  onChange={this.changeHandler}
+                  className={classes.nameField}
+                  margin="normal"
+                  variant="outlined" />
+                  </div>
+                  <Button type="submit" className={classes.cssRoot} onClick={this.handleRegister}>{!this.state.isLoading ? <span>Register</span> : <div><CircularProgress className={classes.progress} size={26} /></div>}</Button>
+              </form>
+              }
+              <Divider className={classes.divider}/>
+              <div className={classes.bottomDiv}>
+                <div  className={classes.bottomSubDiv}>forgotten password?</div>
+                <div  className={classes.bottomSubDiv} style={{textAlign: 'right'}} onClick={() => {this.setState({toggleLogin: false});}}>create account</div>
               </div>
-              <Button type="submit" className={classes.cssRoot} onClick={this.handleLogin}>{!this.state.isLoading ? <span>login</span> : <div><CircularProgress className={classes.progress} size={26} /></div>}</Button>
-          </form> : 
-            <form noValidate autoComplete="off" onSubmit={this.handleRegister}>
-            <TextField
-              InputLabelProps={{
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused,
-                },
-              }}
-              InputProps={{
-                classes: {
-                  root: classes.cssOutlinedInput,
-                  focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-              label="Enter Mobile number"
-              type="text"
-              name="signUpNumber"
-              value={signUpNumber}
-              onChange={this.changeHandler}
-              className={classes.textField}
-              margin="normal"
-              variant="outlined" />
-              <div>
-              <TextField
-              InputLabelProps={{
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused,
-                },
-              }}
-              InputProps={{
-                classes: {
-                  root: classes.cssOutlinedInput,
-                  focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-              label="Enter Password"
-              type="password"
-              name="signUpPass"
-              value={signUpPass}
-              onChange={this.changeHandler}
-              className={classes.textField}
-              margin="normal"
-              variant="outlined" />
-              </div>
-              <div>
-              <TextField
-              InputLabelProps={{
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused,
-                },
-              }}
-              InputProps={{
-                classes: {
-                  root: classes.cssOutlinedInput,
-                  focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-              label="Enter Email"
-              type="email"
-              name="email"
-              value={email}
-              onChange={this.changeHandler}
-              className={classes.textField}
-              margin="normal"
-              variant="outlined" />
-              </div>
-              <div>
-              <TextField
-              InputLabelProps={{
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused,
-                },
-              }}
-              InputProps={{
-                classes: {
-                  root: classes.cssOutlinedInput,
-                  focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-              label="Firstname"
-              type="text"
-              name="firstname"
-              value={firstname}
-              onChange={this.changeHandler}
-              className={classes.nameField}
-              margin="normal"
-              variant="outlined" />
-              <TextField
-              style={{float: 'right'}}
-              InputLabelProps={{
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused,
-                },
-              }}
-              InputProps={{
-                classes: {
-                  root: classes.cssOutlinedInput,
-                  focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-              label="Lastname"
-              type="text"
-              name="lastname"
-              value={lastname}
-              onChange={this.changeHandler}
-              className={classes.nameField}
-              margin="normal"
-              variant="outlined" />
-              </div>
-              <Button type="submit" className={classes.cssRoot} onClick={this.handleRegister}>{!this.state.isLoading ? <span>Register</span> : <div><CircularProgress className={classes.progress} size={26} /></div>}</Button>
-          </form>
-          }
-          <Divider className={classes.divider}/>
-          <div className={classes.bottomDiv}>
-            <div  className={classes.bottomSubDiv}>forgotten password?</div>
-            <div  className={classes.bottomSubDiv} style={{textAlign: 'right'}} onClick={() => {this.setState({toggleLogin: false});}}>create account</div>
-          </div>
-        </div>
-      </Card>
+            </div>
+          </Card>
+        </Grid>
+      </Grid>
     );
   }
 
@@ -392,6 +402,12 @@ class LoginComponent extends Component {
 
 LoginComponent.propTypes = {
   classes: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(LoginComponent);
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { loginUser })(withStyles(styles)(LoginComponent));

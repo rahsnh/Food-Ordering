@@ -188,6 +188,7 @@ a:hover {
 	color: white;
 	outline: none;
 	border: none;
+	text-transform: capitalize;
 }
 
 .cart_div {

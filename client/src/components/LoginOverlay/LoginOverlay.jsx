@@ -4,11 +4,9 @@ import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-import {
-  getFromStorage,
-  setInStorage,
-} from '../../utils/storage';
+import { connect } from "react-redux";
+import { loginUser } from "../actions/allActions";
+import $ from 'jquery';
 
 const styles = theme => ({
   progress: {
@@ -27,7 +25,6 @@ class LoginOverlay extends Component {
     this.state = {
       isLoading: false,
       toggle: true,
-      token: '',
       Error: '',
       signInNumber: '',
       signInPassword: '',
@@ -52,13 +49,6 @@ class LoginOverlay extends Component {
 
     this.renderElement = this.renderElement.bind(this);
     this.renderSignUp = this.renderSignUp.bind(this);
-  }
-
-  componentDidMount() {
-    const obj = getFromStorage('the_main_app');
-    if (obj && obj.token) {
-      this.setState({token: obj.token});
-    }
   }
 
   changeHandler(event) {
@@ -127,7 +117,7 @@ class LoginOverlay extends Component {
     } = this.state;
 
     this.setState({
-      isLoading: true,
+      isLoading: true
     });
 
     // Post request to backend
@@ -138,24 +128,24 @@ class LoginOverlay extends Component {
       },
       body: JSON.stringify({
         phno: signInNumber,
-        password: signInPassword,
-        token_id: this.state.token,
+        password: signInPassword
       }),
     }).then(res => res.json())
       .then(json => {
         if (json.success) {
-          setInStorage('the_main_app', { token: json.token });
+          this.props.loginUser(json.token);
           this.setState({
             Error: '',
             isLoading: false,
             signInPassword: '',
-            signInNumber: '',
+            signInNumber: ''
           });
-        window.location.href = '/';
+          $('#login_overlay').fadeOut();
+          $('.modal_content').fadeOut();
         } else {
           this.setState({
             Error: json.message,
-            isLoading: false,
+            isLoading: false
           });
         }
       });
@@ -284,7 +274,7 @@ class LoginOverlay extends Component {
         }
         </CSSTransition>
         <div className="group">
-          {this.state.toggle ? <span style={{color: '#a9a9a9'}}>Don't have an account? </span> : <span style={{color: '#a9a9a9'}}>Already have an account? </span>}
+          {this.state.toggle ? (<span style={{color: '#a9a9a9'}}>Don't have an account? </span>) : (<span style={{color: '#a9a9a9'}}>Already have an account? </span>)}
           <a id="toggle-btn" onClick={() => {this.setState({Error: '', toggle: !this.state.toggle})}}>{this.state.toggle ? <span>Sign Up</span> : <span>Log In</span>}</a>
         </div>
        </div>
@@ -300,7 +290,8 @@ class LoginOverlay extends Component {
         </form>
       );
    }
- }
+  }
+ 
 
   render() {
     const {
@@ -332,4 +323,4 @@ LoginOverlay.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(LoginOverlay);
+export default connect(null,{ loginUser })(withStyles(styles)(LoginOverlay));
